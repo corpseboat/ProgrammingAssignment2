@@ -28,8 +28,10 @@ makeCacheMatrix <- function(matrixToInitialize = matrix()) {
         ##set initializes the external storage and stores a matrix in it. Inverse is initialized but not computed.
         set <- function(matrixToInitialize) {
                 #note that this locally scoped matrixToInitialize takes precedence over the function argument.
-                #also '<<-' digs into the constructor function's scope, allowing the data to persist.
+                #also '<<-' digs into the (constructor) function's scope, allowing the data to persist.
                 cachedMatrix <<- matrixToInitialize
+                
+                #if you're reinitializing the matrix, the old inverse is NO DANG GOOD NO MO
                 cachedInverse <<- NULL
         }
         
@@ -76,7 +78,8 @@ cacheSolve <- function(x, ...) {
                 return(temp)
         }
         ##if execution proceeds to this point, we need to get that inverse.
-        ##this is implcitly an 'else' to the 'if' above.
+        ##what follows is implcitly an 'else' to the 'if' above.
+        
         
         ##from inside out:
         ## x.get() - gets the matrix x stores
